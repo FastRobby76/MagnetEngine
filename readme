@@ -4,12 +4,3 @@ Micropython
 mainfinal.py und meine boot.py sind o.k.
 mainfinal1.3  und boot.py ist error.
 mainfinal1.3 ist weiterentwicklung von mainfinal.py
-
-How to debugg apendencies about Winkelfunktion.py in order to mainfinal.py and mainfinal1.3.py???
-
-seit 1.4 parsefunktion durch community abgeleitet
-durch änderung 1.4 mit KI code zu 1.5 generiert
-
-fazit durch ..1.5: programm läuft aber kein output an die pin's 
-
-it should do a thing like x³= y³ = z³
