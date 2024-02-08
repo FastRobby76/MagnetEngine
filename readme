@@ -5,6 +5,7 @@ mainfinal.py und meine boot.py sind o.k.
 mainfinal1.3  und boot.py ist error.
 mainfinal1.3 ist weiterentwicklung von mainfinal.py
 
-resultierende 3eck.py und daraus 3eckmitsinus.py wobei 3eckmitsinus*.py nicht funktioniert aber 3eck.py schon
+resultierende 3eck.py und daraus 3eckmitsinus.py wobei 3eckmitsinus*.py nicht funktioniert aber 3eck.py schon.
+bei 3eckmitsinus2.py ist ab zeile 200 bis 222 neuer code
 
 ein esp32 istvia i/o 7mal mit der base von bd139 bipolartransistoren und 1kohm wiederständen verbunden. Jeweils am collector des transistors is eine 1N4004 Diode verbunden. zwischen der diode steckt jeweils ein 12Volt 0,13Ampere Elektomagnet. der zwischen colector und emiter der 1N4004 Diode steht. die stromquelle ist ein 3Kammer Lithium Ionen Akku mit 11,1Volt.
