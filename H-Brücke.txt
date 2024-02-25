@@ -1,0 +1,9 @@
+    1: [23, 19],  # Motor 1 H-Brücke 1 B
+    2: [18, 26],  # Motor 4 H-Brücke 1 A
+    3: [21, 22],  # Motor 2 H-Brücke 2 B
+    4: [3, 1],    # Motor 5 H-Brücke 2 A
+    5: [4, 12],   # Motor 3 H-Brücke 3 B
+    6: [32, 25]   # Motor 6 H-Brücke 3 A
+}
+
+dieses sollte der Pinbelegung dienen
