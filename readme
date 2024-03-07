@@ -5,6 +5,11 @@ mainfinal.py und meine boot.py sind o.k.
 mainfinal1.3  und boot.py ist error.
 mainfinal1.3 ist weiterentwicklung von mainfinal.py
 
+3erHBrücke.py ist Entwicklung aus HBrücke.py etc und endgültige Funktion noch nicht getestet
+
+
+
+
 resultierende 3eck.py und daraus 3eckmitsinus.py wobei 3eckmitsinus*.py nicht funktioniert aber 3eck.py schon.
 bei 3eckmitsinus2.py ist ab zeile 200 bis 222 neuer code
 bei 3eckmitsinus.py ist augenmerk auf Zeile 163 bis 199 zu lenken, da dort die verbindung zueinander entstehen sollte wie in 3eckmitsinus2.py ab zeile 200 bis 222 angedeutet 
@@ -12,3 +17,4 @@ bei 3eckmitsinus.py ist augenmerk auf Zeile 163 bis 199 zu lenken, da dort die v
 ein esp32 ist via i/o 7mal mit der Base von bd139 bipolartransistoren und 1kohm wiederständen verbunden. Jeweils an den collectoren der transistoren ist jeweils eine 1N4004 Diode verbunden. zwischen der diode steckt jeweils ein 12Volt 0,13Ampere Elektomagnet,der zwischen colector und emiter der 1N4004 Diode steht. die stromquelle ist ein 3Kammer Lithium Ionen Akku mit 11,1Volt. Aber es ist mit 12volt Kondensator mit mindestens 1,2Ampere(besser wohl 1,5Ampere), mit sicherheit auch andere Stromquellen möglich
 ich rechne mit 12Volt, 0,13 ampere x7 für die Schaltung der Magnete und den ESP32 mit 50 mAmpere und 5Volt, aufgrund dessen muss der Kondensator wohl 12volt und 1Ampere ab können mindestens.
 Es ist weiterhin ein 5Volt Transformator (von 12 auf 5Volt) für den ESP32 verbaut.
+
