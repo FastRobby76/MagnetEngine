@@ -27,4 +27,4 @@ Der Bauplan umfasst 2x dcdc stepdownregler lm2596, einem ESP32, 4 l298n H-Brück
 An dem 8. Haltemagneten wird ein Anker(münze mit Ferromagneten) elektromagnetisch gehalten.
 An das ganze system wird ein 8xPin Arcade Battlestick Joystick für eine Override funktion angeschlossen.
 Das System wird mittels Weboberfläche Eingestellt.
-
+Magnetmaschine.txt als Bedienungsanleitung eingefügt
