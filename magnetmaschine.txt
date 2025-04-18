@@ -1,0 +1,91 @@
+Umfassende Bedienungsanleitung für das Magnetsteuerungssystem (basierend auf dem aktualisierten Code)
+
+Dieses Handbuch bietet eine detaillierte Erklärung der Funktionsweise, der Handhabung über die Weboberfläche, der einzelnen Override-Modi sowie der Pinbelegung der Magnete und des Joysticks des Magnetsteuerungssystems, basierend auf dem aktualisierten Code.
+
+**1. Funktionsweise des Systems:**
+
+Das Magnetsteuerungssystem basiert auf einem ESP32-Mikrocontroller, der über eine Weboberfläche gesteuert wird. Der ESP32 generiert Pulsweitenmodulation (PWM)-Signale, um die Intensität von bis zu acht Magneten (sieben einzeln gesteuerte und ein weiteres Paar) zu regeln. Die PWM-Signale werden über die im Code definierten Pins an die Magnete ausgegeben. Die Frequenz dieser PWM-Signale kann über die Weboberfläche eingestellt werden.
+
+Die Steuerung erfolgt primär über einen Joystick, dessen analoge Eingabewerte gelesen und in entsprechende PWM-Werte für die sieben Hauptmagnete umgewandelt werden. Der achte Magnet wird separat über einen weiteren analogen Eingang des Joysticks gesteuert.
+
+Zusätzlich bietet das System verschiedene "Override"-Modi, die vordefinierte oder prozedurale Muster auf die Magnete anwenden und die direkte Joystick-Steuerung überschreiben. Die Einstellungen des Systems, wie PWM-Basiswerte, Override-Modi und zugehörige Parameter, können über die Weboberfläche angepasst und gespeichert werden. Diese Einstellungen werden im nichtflüchtigen Speicher des ESP32 abgelegt und bleiben auch nach einem Neustart erhalten.
+
+**2. Handhabung über die Weboberfläche:**
+
+Nachdem der ESP32 erfolgreich mit dem WLAN verbunden ist und seine IP-Adresse im seriellen Monitor angezeigt wurde, kann die Weboberfläche über einen Webbrowser aufgerufen werden.
+
+* **Navigation:** Die Oberfläche ist in verschiedene Bereiche unterteilt: "PWM-Einstellungen", "Override-Modus", "Einstellungen für Magnet 8", "Joystick Override Einstellungen" und die Einstellungen für die einzelnen Override-Modi.
+* **Einstellungen ändern:**
+    * Verwenden Sie die Schieberegler oder numerischen Eingabefelder, um PWM-Werte wie \*Grund-PWM\*, \*Max. Intensität (Joystick)\* und \*Override PWM\* anzupassen. Die aktuellen Werte werden direkt neben den Eingabefeldern angezeigt.
+    * Wählen Sie einen Override-Modus aus dem Dropdown-Menü. Die verfügbaren Modi sind \*Kein Override\*, \*Zyklisch\*, \*Vorrück\*, \*Ruhig\*, \*Pulsierend\*, \*Welle\*, \*Zufall\*, \*Fading\*, \*Sequenz\*, \*Alle An/Aus\* und \*Halbe An\*.
+    * Passen Sie die spezifischen Parameter für den ausgewählten Override-Modus mithilfe der bereitgestellten Eingabefelder an (z.B. \*Grundmuster-Intervall\*, \*Puls Intervall\*, \*Wellengeschwindigkeit\* usw.). Die Wertebereiche für diese Parameter sind in der Regel angegeben.
+    * Aktivieren oder deaktivieren Sie Optionen wie die "Joystick steuert Geschwindigkeit" für den zyklischen Modus über die entsprechenden Kontrollkästchen.
+    * Wählen Sie Optionen aus Dropdown-Menüs (z.B. die \*Joystick Achse\* für die Geschwindigkeitssteuerung im zyklischen Modus).
+    * Passen Sie die Intensität von Magnet 8 separat über den Schieberegler oder das numerische Eingabefeld ein.
+    * Stellen Sie die Totzone für die Joystick-Steuerung in den Override-Modi ein, um unbeabsichtigte Aktivierungen zu vermeiden.
+* **Wertebereiche:** Beachten Sie die angegebenen Wertebereiche für die einzelnen Einstellungen (z.B. PWM 0-255, Frequenzen 1-1000 Hz, Intervalle in Millisekunden, Totzone 0.0-1.0). Eingaben außerhalb dieser Bereiche werden möglicherweise begrenzt oder führen zu unerwartetem Verhalten.
+* **Speichern:** Klicken Sie auf die Schaltfläche "Speichern", um die aktuellen Einstellungen an den ESP32 zu senden und im nichtflüchtigen Speicher (Preferences) zu speichern. Die Magnetsteuerung wird daraufhin mit den neuen Einstellungen aktualisiert. Nach dem Speichern sollte idealerweise eine kurze Bestätigung im Browser erfolgen (im aktuellen Code als einfaches "OK" implementiert).
+
+**3. Detaillierte Beschreibung der Override-Modi:**
+
+Die Override-Modi bieten verschiedene Möglichkeiten, die Magnete automatisiert zu steuern, ohne direkte Joystick-Eingabe. Der \*Override PWM\*-Wert dient in vielen dieser Modi als Grundlage für die Intensität oder als maximaler Wert.
+
+* **Kein Override (Joystick):**
+    * **Funktionsweise:** In diesem Modus ist die direkte Steuerung der sieben Hauptmagnete über die X- und Y-Achsen des Joysticks aktiv. Die Intensität jedes Magneten wird durch eine Kombination aus dem \*Grund-PWM\*-Wert und einer Modulation basierend auf der Joystick-Auslenkung und der geometrischen Anordnung der Magnete (Cosinus- und Sinusfunktionen) bestimmt. Die Z-Achse des Joysticks steuert die PWM des achten Magneten im Bereich von 0 bis 255.
+    * **Handhabung:** Es sind keine spezifischen Einstellungen für diesen Modus erforderlich außer dem \*Grund-PWM\*-Wert und dem \*Max. Intensität (Joystick)\*-Wert, die den Steuerbereich definieren.
+* **Zyklisch:**
+    * **Funktionsweise:** Dieser Modus sequenziert durch drei vordefinierte Muster (gespeichert in `switchPattern`). Das \*Grundmuster-Intervall\* bestimmt die Zeit zwischen den Musterwechseln. Ist "Joystick steuert Geschwindigkeit" aktiviert, wird dieses Intervall basierend auf der Auslenkung der gewählten Joystick-Achse (zwischen dem \*Min.\* und \*Max. Intervall\*) dynamisch angepasst. Der achte Magnet wird, wie in allen Override-Modi, durch den Parameter `magnet8Intensity` beeinflusst. Der Code enthält eine komplexere Logik für die Joystick-Steuerung, die sowohl die Geschwindigkeit als auch die Intensität beeinflusst, selbst innerhalb der Totzone.
+    * **Handhabung:** Stellen Sie das \*Grundmuster-Intervall\* für die Basisgeschwindigkeit ein. Aktivieren Sie optional die Joystick-Geschwindigkeitssteuerung und konfigurieren Sie die Achse sowie die minimalen und maximalen Intervalle. Experimentieren Sie mit der Totzone, um das Verhalten bei geringen Joystick-Auslenkungen anzupassen.
+* **Vorrück:**
+    * **Funktionsweise:** Hier wird immer nur ein Hauptmagnet gleichzeitig aktiviert (mit einem Wert, der von `overridePWM` und der Joystick-Auslenkung beeinflusst wird), und die Aktivierung wandert in einer Schleife durch die sieben Magnete. Das \*Grundmuster-Intervall\* steuert die Geschwindigkeit dieser Wanderung.
+    * **Handhabung:** Passen Sie das \*Grundmuster-Intervall\* an, um die Geschwindigkeit der sequenziellen Aktivierung zu ändern. Die Joystick-Totzone beeinflusst, ab welcher Auslenkung die Intensität verändert wird.
+* **Ruhig:**
+    * **Funktionsweise:** Alle sieben Hauptmagnete und der achte Magnet werden mit einem konstanten Wert angesteuert, der durch `overridePWM` und die Joystick-Auslenkung beeinflusst wird.
+    * **Handhabung:** Stellen Sie den gewünschten konstanten Intensitätslevel über den \*Override PWM\*-Regler ein. Die Joystick-Totzone bestimmt, ab welcher Auslenkung eine Intensitätsänderung erfolgt.
+* **Pulsierend:**
+    * **Funktionsweise:** Die Intensität aller sieben Hauptmagnete und des achten Magneten oszilliert sinusförmig zwischen dem \*Grund-PWM\*-Wert und einem Wert, der von `overridePWM` und der Joystick-Auslenkung abhängt. Das \*Puls Intervall\* bestimmt die Frequenz dieser Oszillation.
+    * **Handhabung:** Verwenden Sie das \*Puls Intervall\*, um die Pulsgeschwindigkeit zu regulieren. \*Grund-PWM\* und \*Override PWM\* definieren den unteren und oberen Intensitätsbereich. Die Joystick-Totzone beeinflusst die Intensitätsänderung.
+* **Welle:**
+    * **Funktionsweise:** Dieser Modus erzeugt eine wellenartige Bewegung der Magnetintensitäten über die sieben Hauptmagnete. Jeder Magnet durchläuft eine sinusförmige Intensitätsänderung, wobei die Phasen so verschoben sind, dass eine räumliche Welle entsteht. Die \*Wellengeschwindigkeit\* bestimmt, wie schnell sich diese Welle bewegt. Die Intensitäten liegen zwischen \*Grund-PWM\* und einem Wert, der von `overridePWM` und der Joystick-Auslenkung abhängt.
+    * **Handhabung:** Stellen Sie die \*Wellengeschwindigkeit\* ein, um die Ausbreitungsgeschwindigkeit der Welle zu beeinflussen. Die Joystick-Totzone beeinflusst die Intensitätsänderung.
+* **Zufall:**
+    * **Funktionsweise:** In zufälligen Zeitabständen (zwischen \*Zufall Min. Intervall\* und \*Zufall Max. Intervall\*) wird für jeden der sieben Hauptmagnete und den achten Magnet ein neuer zufälliger PWM-Wert generiert. Der maximale Zufallswert wird durch `overridePWM` und die Joystick-Auslenkung beeinflusst.
+    * **Handhabung:** Definieren Sie den minimalen und maximalen Zeitraum für die Zufallsänderungen mit \*Zufall Min. Intervall\* und \*Zufall Max. Intervall\*. Die Joystick-Totzone beeinflusst die maximale Intensität.
+* **Fading:**
+    * **Funktionsweise:** Die Intensität jedes der sieben Hauptmagnete blendet sanft zwischen dem \*Grund-PWM\*-Wert und 255 hoch und runter. Jeder Magnet macht dies unabhängig, und die Richtung ändert sich nach Ablauf der \*Fading Dauer\*. Der achte Magnet wird konstant auf einem Wert gehalten, der von `overridePWM` und der Joystick-Auslenkung abhängt.
+    * **Handhabung:** Stellen Sie die \*Fading Dauer\* ein, um die Geschwindigkeit der Ein- und Ausblendeffekte zu steuern. Die Joystick-Totzone beeinflusst die maximale Intensität.
+* **Sequenz:**
+    * **Funktionsweise:** Es werden zwei vordefinierte Sequenzen (in `sequences`) für die sieben Hauptmagnete abgespielt. Die \*Aktive Sequenz\*-Auswahl (0 oder 1) bestimmt, welche Sequenz verwendet wird. Das \*Sequenz Intervall\* legt die Zeitdauer zwischen den einzelnen Schritten der Sequenz fest. Die Intensität wird durch die Joystick-Auslenkung beeinflusst.
+    * **Handhabung:** Wählen Sie die gewünschte Sequenznummer und stellen Sie das \*Sequenz Intervall\* für die Abspielgeschwindigkeit ein. Die Joystick-Totzone beeinflusst die Intensität.
+* **Alle An/Aus:**
+    * **Funktionsweise:** Alle sieben Hauptmagnete und der achte Magnet werden gleichzeitig auf einen PWM-Wert gesetzt, der durch den \*Alle An/Aus Status\*-Wert und die Joystick-Auslenkung bestimmt wird.
+    * **Handhabung:** Verwenden Sie den \*Alle An/Aus Status\*-Regler, um den gewünschten gemeinsamen Intensitätswert einzustellen. Die Joystick-Totzone beeinflusst die Intensität.
+* **Halbe An:**
+    * **Funktionsweise:** Entweder die Magnete mit geraden oder ungeraden Indizes (basierend auf dem \*Halbe An Modus\* 0 oder 1) werden aktiviert, während die andere Hälfte ausgeschaltet bleibt. Die aktivierten Magnete werden mit einem Wert angesteuert, der von `overridePWM` und der Joystick-Auslenkung abhängt.
+    * **Handhabung:** Wählen Sie mit dem \*Halbe An Modus\* (0 oder 1), welche Hälfte der Magnete aktiv sein soll. Die Joystick-Totzone beeinflusst die Intensität.
+
+    **Wichtig:** In den Override-Modi beeinflusst die Joystick-Auslenkung (innerhalb der definierten Totzone) die Intensität der Magnete. Eine stärkere Auslenkung erhöht die Intensität, während geringe Auslenkungen (innerhalb der Totzone) nur geringe oder keine Auswirkungen haben. Dies gilt für alle Override-Modi, auch wenn es in den vorherigen Beschreibungen nicht explizit erwähnt wurde.
+
+**4. Pinbelegung:**
+
+Die folgende Tabelle zeigt die Zuordnung der Magnete und des Joysticks zu den ESP32-Pins:
+
+| Komponente     | Funktion        | ESP32 Pins |
+|----------------|-----------------|------------|
+| Joystick       | X-Achse         | 36, 39     |
+| Joystick       | Y-Achse         | 34, 35     |
+| Joystick       | Z-Achse         | 32, 33     |
+| Joystick       | W-Achse (unbenutzt für Magnete) | 25, 26     |
+| Magnet 1       | Ansteuerung     | 16, 17     |
+| Magnet 2       | Ansteuerung     | 18, 19     |
+| Magnet 3       | Ansteuerung     | 21, 22     |
+| Magnet 4       | Ansteuerung     | 23, 4      |
+| Magnet 5       | Ansteuerung     | 2, 15      |
+| Magnet 6       | Ansteuerung     | 13, 12     |
+| Magnet 7       | Ansteuerung     | 14, 27     |
+| Magnet 8       | Ansteuerung     | 5, 3       |
+
+**Hinweis:** Jeder der sieben Hauptmagnete wird über zwei dedizierte Pins angesteuert, die parallel geschaltet sind, um den Stromfluss zu erhöhen. Der achte Magnet wird ebenfalls über zwei Pins angesteuert. Die Joystick-Achsen X, Y und Z liefern analoge Spannungswerte, die vom ESP32 eingelesen werden. Die W-Achse des Joysticks ist im aktuellen Code nicht direkt zur Magnetsteuerung implementiert, könnte aber für zukünftige Erweiterungen genutzt werden.
+
+Diese umfassende Anleitung sollte nun alle relevanten Informationen zur Bedienung und zum Verständnis des Magnetsteuerungssystems enthalten, einschließlich der Auswirkungen der Joystick-Steuerung in den Override-Modi und der neuen Totzonen-Einstellung.
+
