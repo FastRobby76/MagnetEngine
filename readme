@@ -23,6 +23,6 @@ Es ist weiterhin ein 5Volt Transformator (von 12 auf 5Volt) für den ESP32 verba
 *update*
 
 magnetmaschine.ino wurde erstellt.
-Der Bauplan umfasst 2x dcdc stepdownregler lm2596, einem ESP32, 4 l298n H-Brücken, einem Tiefenentladeschutz nebst 11,1v akku, sowie einer boherplatte mit 7x 12v 0,17A Elektromagneten. und einem Haltesystem mit einem 8. Elektromagneten mittig über der bohrplatte mit den 7 anderen elektromagneten.
+Der Bauplan umfasst 2x dcdc stepdownregler lm2596, einem ESP32, 4 l298n H-Brücken, einem Tiefenentladeschutz nebst 11,1v akku, sowie einer bohrplatte mit 7x 12v 0,17A Elektromagneten. und einem Haltesystem mit einem 8. Elektromagneten mittig über der bohrplatte mit den 7 anderen elektromagneten.
 An dem 8. Haltemagneten wird ein Anker(münze mit Ferromagneten) elektromagnetisch gehalten.
 
