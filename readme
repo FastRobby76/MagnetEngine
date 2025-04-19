@@ -1,4 +1,4 @@
-Micropython
+inMicropython
  diff finalmain.py finalmain1.3.py
 
 mainfinal.py und meine boot.py sind o.k.
@@ -28,3 +28,4 @@ An dem 8. Haltemagneten wird ein Anker(münze mit Ferromagneten) elektromagnetis
 An das ganze system wird ein 8xPin Arcade Battlestick Joystick für eine Override funktion angeschlossen.
 Das System wird mittels Weboberfläche Eingestellt.
 Magnetmaschine.txt als Bedienungsanleitung eingefügt
+magnetmaschine2.ino wurde hinzugefügt dadurch sind override und pwm Muster einstellbar
