@@ -29,3 +29,5 @@ An das ganze system wird ein 8xPin Arcade Battlestick Joystick für eine Overrid
 Das System wird mittels Weboberfläche Eingestellt.
 Magnetmaschine.txt als Bedienungsanleitung eingefügt
 magnetmaschine2.ino wurde hinzugefügt dadurch sind override und pwm Muster einstellbar
+*update*
+magnetantriebvorlage.ino wurde hinzugefügt, es müssen textfelder für die musterverarbeitung und eine schaltbildfunktion eingefügt werden. die pwmfrequenz muss über Weboberfläche einstellbar werden 0-1000hz.
