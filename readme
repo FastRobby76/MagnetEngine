@@ -1,4 +1,4 @@
-inMicropython
+ininMicropython
  diff finalmain.py finalmain1.3.py
 
 mainfinal.py und meine boot.py sind o.k.
@@ -31,3 +31,5 @@ Magnetmaschine.txt als Bedienungsanleitung eingefügt
 magnetmaschine2.ino wurde hinzugefügt dadurch sind override und pwm Muster einstellbar
 *update*
 magnetantriebvorlage.ino wurde hinzugefügt, es müssen textfelder für die musterverarbeitung und eine schaltbildfunktion eingefügt werden. die pwmfrequenz muss über Weboberfläche einstellbar werden 0-1000hz.
+
+html0engine.ino hinzugefügt
