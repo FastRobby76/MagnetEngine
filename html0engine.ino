@@ -20,9 +20,9 @@ const int magnet8Pins[2] = {5, 3};
 
 // PWM-Konfiguration für Magnete 0-6 (unverändert)
 int grundPWM = 255;
-int pwmFrequency = 80;
+int pwmFrequency = 90;
 const int pwmResolution = 8;
-volatile int delayTime = 233; // Anpassbare Verzögerungszeit für die Gesamtgeschwindigkeit
+volatile int delayTime = 800; // Anpassbare Verzögerungszeit für die Gesamtgeschwindigkeit
 
 // Globale Variable zur Steuerung von Magnet 8 (0 = aus, 5 = Pin 5 an, 3 = Pin 3 an)
 volatile int magnet8Steuerung = 5;
