@@ -33,4 +33,5 @@ magnetmaschine2.ino wurde hinzugefügt dadurch sind override und pwm Muster eins
 magnetantriebvorlage.ino wurde hinzugefügt, es müssen textfelder für die musterverarbeitung und eine schaltbildfunktion eingefügt werden. die pwmfrequenz muss über Weboberfläche einstellbar werden 0-1000hz.
 
 html0engine.ino hinzugefügt
-4x H-Brücken auf 8x H-Brücken 
+4x H-Brücken auf 8x H-Brücken
+*erfolg*
