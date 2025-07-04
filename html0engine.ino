@@ -7,8 +7,8 @@
 #include <String> // Für String-Manipulation
 
 // WLAN Konfiguration
-const char* ssid = "EngineTestWeb";
-const char* password = "robbydaheim";
+const char* ssid = "name";
+const char* password = "password";
 
 WebServer server(80);
 
