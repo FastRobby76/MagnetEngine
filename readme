@@ -25,7 +25,10 @@ Es ist weiterhin ein 5Volt Transformator (von 12 auf 5Volt) für den ESP32 verba
 magnetmaschine.ino wurde erstellt.
 Der Bauplan umfasst 2x dcdc stepdownregler lm2596, einem ESP32, 8 l298n H-Brücken, einem Tiefenentladeschutz nebst 11,1v akku, sowie einer bohrplatte mit 7x 12v 0,17A Elektromagneten. und einem Haltesystem mit einem 8. Elektromagneten mittig über der bohrplatte mit den 7 anderen elektromagneten.
 An dem 8. Haltemagneten wird ein Anker(münze mit Ferromagneten) elektromagnetisch gehalten.
+
+zukünftig vielleicht:
 An das ganze system wird ein 8xPin Arcade Battlestick Joystick für eine Override funktion angeschlossen.
+
 Das System wird mittels Weboberfläche Eingestellt.
 Magnetmaschine.txt als Bedienungsanleitung eingefügt
 magnetmaschine2.ino wurde hinzugefügt dadurch sind override und pwm Muster einstellbar
@@ -33,5 +36,5 @@ magnetmaschine2.ino wurde hinzugefügt dadurch sind override und pwm Muster eins
 magnetantriebvorlage.ino wurde hinzugefügt, es müssen textfelder für die musterverarbeitung und eine schaltbildfunktion eingefügt werden. die pwmfrequenz muss über Weboberfläche einstellbar werden 0-1000hz.
 
 html0engine.ino hinzugefügt
-4x H-Brücken auf 8x H-Brücken
+4x H-Brücken auf 8x H-Brücken erweitert
 *erfolg*
